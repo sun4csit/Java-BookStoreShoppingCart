@@ -38,14 +38,16 @@ public class CartController extends HttpServlet {
 			throws ServletException, IOException  {
 		// The requested URL path
 		String action = request.getPathInfo();
-
+		System.out.println("Action from CartController : "+action);
 		// Do different things depending on the action (or path requested)
 		try {
 			switch(action) {
 				case "/addcart":
 					 addToCart(request, response);
            break;
-        default:
+				case "/delete":
+					deleteFromCart(request,response);
+				default:
            break;
 			}
 		} catch (Exception e) {
@@ -58,6 +60,7 @@ public class CartController extends HttpServlet {
 
   protected void addToCart(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
+
    HttpSession session = request.getSession();
    String idStr = request.getParameter("id");
    int id = Integer.parseInt(idStr);
@@ -82,6 +85,14 @@ public class CartController extends HttpServlet {
 	 // Add this item and quantity to the ShoppingCart
    shoppingCart.addCartItem(existingBook, quantity);
   }
+  
+  private void deleteFromCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	  HttpSession session = request.getSession();
+	  int index = Integer.parseInt(request.getParameter("index"));
+	  ShoppingCart cart = (ShoppingCart)session.getAttribute("cart");
+	  cart.deleteCartItem(index);
+  }
+  
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);

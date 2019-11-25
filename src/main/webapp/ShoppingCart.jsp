@@ -34,7 +34,8 @@
 					<tr>
 						<form name="cart_form" action="/cart/update">
 							<input type="hidden" name="index"
-								value="<c:out value='${loop.index }'" />
+								value="<c:out value='${loop.index}' />" />
+			
 							<td>${ cartItem.getTitle() }</td>
 							<td>${ cartItem.getAuthor() }</td>
 							<td><fmt:formatNumber value="${ cartItem.getPrice() }"
